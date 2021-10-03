@@ -11,12 +11,12 @@ const numberOfPhotos = 5;
 
 //Количество лайков 
 const likes = {
-  MIN: 15,      
+  MIN: 20,      
   MAX: 200,     
 }
 
 //Максимальное количество генерируемых комментов к фото
-const commentsMax = 3;
+const commentsMax = 5;
 
 
 /*МАССИВЫ ДЛЯ ГЕНЕРАЦИИ */
