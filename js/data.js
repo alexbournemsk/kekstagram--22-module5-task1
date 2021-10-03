@@ -11,7 +11,7 @@ const numberOfPhotos = 5;
 
 //Количество лайков 
 const likes = {
-  MIN: 20,      
+  MIN: 30,      
   MAX: 200,     
 }
 
