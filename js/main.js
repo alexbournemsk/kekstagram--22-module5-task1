@@ -1,5 +1,5 @@
 /*ДОДЕЛАТЬ: 
--Редактор вынести  в отдельный модуль.
+-Редактор вынести  в отдельный модуль. 
 -Отображение редактора сделать при событии "изменения значения поля #upload-file"
 -Убирать eventListeners
 */
@@ -70,7 +70,7 @@ const imageEditorOpen = function () {
 
 }
 
-imageEditorOpen();
+imageEditorOpen(); 
 
 
 // document.addEventListener("DOMContentLoaded", showFullPicture)
