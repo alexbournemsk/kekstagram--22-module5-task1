@@ -79,4 +79,28 @@ const imageEditorOpen = function () {
 }
 
 
+
+//Effect slider
+
+const sliderElement = document.querySelector('.effect-level__slider');
+const testValue = document.querySelector('.level-form__value')
+const effectLevelElement = document.querySelector('.effect-level__value')
+
+noUiSlider.create(sliderElement, {
+  range: {
+      min: 0,
+      max: 100,
+  },
+  start: 80,
+  step: 1,
+});
+
+sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
+  testValue.value = unencoded[handle];
+  let filterValue = testValue.value/100
+  imageUploadPreview.style = `filter: grayscale(${filterValue})`
+
+});
+
+
 export { imageEditorOpen }

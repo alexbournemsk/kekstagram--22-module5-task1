@@ -9,7 +9,7 @@ import { getData } from './api.js';
 
 getData(renderAllPhotos);
 
-//imageEditorOpen(); 
+imageEditorOpen(); 
 
 
 // document.addEventListener("DOMContentLoaded", showFullPicture)
