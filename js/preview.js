@@ -1,4 +1,4 @@
-import { photos } from './data.js';
+//import { photos } from './data.js';
 import { modalShow } from './bigpicture.js';
 
 const picturesList = document.querySelector('.pictures');
@@ -14,7 +14,7 @@ const renderPhoto = function (picture) {
   picturesList.appendChild(photoPreview);
 }
   
-const renderAllPhotos = function() {
+const renderAllPhotos = function(photos) {
   photos.forEach(picture => {
     renderPhoto(picture)
   });
