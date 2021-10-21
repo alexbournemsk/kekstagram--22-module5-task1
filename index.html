@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/nouislider@14.6.3/distribute/nouislider.min.css">
   <title>Кекстаграм</title>
 </head>
 
@@ -63,6 +64,8 @@
                   <fieldset class="img-upload__effect-level  effect-level">
                     <input class="effect-level__value" type="number" name="effect-level" value="">
                     <div class="effect-level__slider"></div>
+                    
+
                   </fieldset>
 
                   <!-- Кнопка для закрытия формы редактирования изображения -->
@@ -70,6 +73,12 @@
                 </div>
 
                 <!-- Наложение эффекта на изображение -->
+                <!-- Временное отображение значения -->
+                <div style="height:10px; position: absolute">
+                  <input class="level-form__value" value=100 style="color:black">
+                </div>
+                <!-- Временное отображение значения -->
+
                 <fieldset class="img-upload__effects  effects">
                   <ul class="effects__list">
                     <li class="effects__item">
@@ -258,6 +267,7 @@
   </template>
 
   <script src="js/main.js" type="module"></script>
+  <script src="https://unpkg.com/nouislider@14.6.3/distribute/nouislider.min.js"></script>
 
 </body>
 
