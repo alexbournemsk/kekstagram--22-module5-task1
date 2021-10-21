@@ -20,14 +20,26 @@ const scaleDownButton = document.querySelector('.scale__control--smaller');
 
 //Управление эффектами
 const effectSelector = document.querySelector('.effects__list');
+const sliderBlock = document.querySelector('.img-upload__effect-level');
+let selectedFilter = '';
 
+//Обработчик переключения эффектов
 const effectsHandler = (evt) => {
-  imageUploadPreview.className = 'img-upload__preview'
-  imageUploadPreview.classList.add(`effects__preview--${evt.target.value}`)
+  selectedFilter = evt.target.value;  
+  imageUploadPreview.className = 'img-upload__preview';
+  imageUploadPreview.style = '';
+  imageUploadPreview.classList.add(`effects__preview--${selectedFilter}`);
+  
+  if (evt.target.value == 'none') {
+    sliderHide()
+  } else {    
+  sliderShow();
+  }
+  
 }
 
+//Listener переключения эффектов
 effectSelector.addEventListener('change', effectsHandler)
-
 
 
 const onEscapePress = () => {
@@ -44,6 +56,11 @@ const scaleReset = () => {
   controlValue.value = '100%';
 }
 
+const sliderHide = () => {sliderBlock.classList.add('hidden')}
+
+const sliderShow = () => {sliderBlock.classList.remove('hidden')}
+
+
 const editorModalClose = () => {
   scrollOn();
   document.querySelector('.img-upload__overlay').classList.add('hidden');
@@ -52,6 +69,7 @@ const editorModalOpen = () => {
   scrollOff();
   onEscapePress();
   scaleReset();
+  sliderHide();
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   const editorCloseButtonElement = document.querySelector('#upload-cancel');
   editorCloseButtonElement.addEventListener('click', editorModalClose);
@@ -83,7 +101,6 @@ const imageEditorOpen = function () {
 //Effect slider
 
 const sliderElement = document.querySelector('.effect-level__slider');
-const testValue = document.querySelector('.level-form__value')
 const effectLevelElement = document.querySelector('.effect-level__value')
 
 noUiSlider.create(sliderElement, {
@@ -95,11 +112,33 @@ noUiSlider.create(sliderElement, {
   step: 1,
 });
 
-sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
-  testValue.value = unencoded[handle];
-  let filterValue = testValue.value/100
-  imageUploadPreview.style = `filter: grayscale(${filterValue})`
+sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {   
+  effectLevelElement.value = unencoded[handle];
+  let filterValue = effectLevelElement.value/100;
+  let filterType = 'none'
 
+  switch (selectedFilter) {
+    case 'chrome':
+      filterType = 'grayscale';
+      break;
+    case 'sepia':
+      filterType = 'sepia';      
+      break;
+    case 'marvin':
+      filterType = 'invert'; 
+      break;
+    case 'phobos':
+      filterType = 'blur'; 
+      break;
+    case 'heat':
+      filterType = 'brightness'; 
+      break;
+    default:
+      filterType = 'none';
+      sliderHide()
+      break;
+  }
+  imageUploadPreview.style = `filter: ${filterType}(${filterValue})`
 });
 
 

@@ -2,7 +2,7 @@ import { showAlert } from './util.js'
 
 
 const getData = (onSuccess) => {
-  fetch('https://23.javascript.pages.academy/kekstagram/datas')
+  fetch('https://23.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
     .then((json) => onSuccess(json))
     .catch((err) => {
