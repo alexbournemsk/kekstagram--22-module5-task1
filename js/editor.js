@@ -18,28 +18,7 @@ const controlValue = document.querySelector('.scale__control--value');
 const scaleUpButton = document.querySelector('.scale__control--bigger');
 const scaleDownButton = document.querySelector('.scale__control--smaller');
 
-//Управление эффектами
-const effectSelector = document.querySelector('.effects__list');
-const sliderBlock = document.querySelector('.img-upload__effect-level');
-let selectedFilter = '';
 
-//Обработчик переключения эффектов
-const effectsHandler = (evt) => {
-  selectedFilter = evt.target.value;  
-  imageUploadPreview.className = 'img-upload__preview';
-  imageUploadPreview.style = '';
-  imageUploadPreview.classList.add(`effects__preview--${selectedFilter}`);
-  
-  if (evt.target.value == 'none') {
-    sliderHide()
-  } else {    
-  sliderShow();
-  }
-  
-}
-
-//Listener переключения эффектов
-effectSelector.addEventListener('change', effectsHandler)
 
 
 const onEscapePress = () => {
@@ -57,7 +36,6 @@ const scaleReset = () => {
 }
 
 const sliderHide = () => {sliderBlock.classList.add('hidden')}
-
 const sliderShow = () => {sliderBlock.classList.remove('hidden')}
 
 
@@ -65,6 +43,7 @@ const editorModalClose = () => {
   scrollOn();
   document.querySelector('.img-upload__overlay').classList.add('hidden');
 }
+
 const editorModalOpen = () => {
   scrollOff();
   onEscapePress();
@@ -102,43 +81,114 @@ const imageEditorOpen = function () {
 
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelElement = document.querySelector('.effect-level__value')
+const effectSelector = document.querySelector('.effects__list');
+const sliderBlock = document.querySelector('.img-upload__effect-level');
+let selectedFilter = '';
+let pxOrPercent = '';
+let filterType = 'none'
 
-noUiSlider.create(sliderElement, {
-  range: {
-      min: 0,
-      max: 100,
-  },
-  start: 80,
-  step: 1,
-});
-
-sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {   
-  effectLevelElement.value = unencoded[handle];
-  let filterValue = effectLevelElement.value/100;
-  let filterType = 'none'
+//Обработчик переключения эффектов
+const effectsHandler = (evt) => {
+  selectedFilter = evt.target.value;  
+  imageUploadPreview.className = 'img-upload__preview';
+  imageUploadPreview.style = '';
+  imageUploadPreview.classList.add(`effects__preview--${selectedFilter}`);
+ 
+  
+  if (selectedFilter == 'none') {
+    sliderHide()
+  } else {    
+  sliderShow();
+  }  
 
   switch (selectedFilter) {
     case 'chrome':
       filterType = 'grayscale';
+      pxOrPercent = '';
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          'min': 0,
+          'max': 1
+      },
+        start: 0.8,
+        step: 0.1,
+      }); 
       break;
     case 'sepia':
-      filterType = 'sepia';      
+      filterType = 'sepia';
+      pxOrPercent = '';
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          'min': 0,
+          'max': 1
+      },
+        start: 0.8,
+        step: 0.1,
+      }); 
       break;
     case 'marvin':
-      filterType = 'invert'; 
+      pxOrPercent = '%';
+      filterType = 'invert';
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          'min': 0,
+          'max': 100
+      },
+        start: 80,
+        step: 1,
+      });
       break;
     case 'phobos':
-      filterType = 'blur'; 
+      filterType = 'blur';
+      pxOrPercent = 'px';
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          'min': 0,
+          'max': 3
+      },
+        start: 2.4,
+        step: 0.1,
+      });
       break;
+
     case 'heat':
-      filterType = 'brightness'; 
+      filterType = 'brightness';
+      pxOrPercent = '';
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          'min': 1,
+          'max': 3
+      },
+        start: 2.6,
+        step: 0.1,
+      });
       break;
+
     default:
       filterType = 'none';
       sliderHide()
       break;
   }
-  imageUploadPreview.style = `filter: ${filterType}(${filterValue})`
+}
+
+//Listener переключения эффектов
+effectSelector.addEventListener('change', effectsHandler)
+
+
+//Создаём слайдер
+noUiSlider.create(sliderElement, {
+  range: {
+      min: 0,
+      max: 1,
+  },
+  start: 0.8,
+  step: 0.1,
+});
+
+sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {   
+  effectLevelElement.value = unencoded[handle];
+  let filterValue = effectLevelElement.value;
+  imageUploadPreview.style = `filter: ${filterType}(${filterValue}${pxOrPercent})`
 });
 
 
